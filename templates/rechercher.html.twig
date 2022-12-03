@@ -1,0 +1,57 @@
+   <div class="container">
+        <div class="text-center mt-5">
+            <h1>Les articles</h1>
+        </div>
+        <?php     
+        if(isset($_SESSION['notification'])) {
+            ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-<?= $_SESSION['notification']['result'] ?>" role="alert">
+                    <?= $_SESSION['notification']['message']?>
+                    <?php unset($_SESSION['notification']) ?>
+        <?php
+        } 
+        
+        if(!empty($_GET['search'])){
+            $articlesManager = new articlesManager($bdd);
+    
+            $listeArticles = $articlesManager->getListArticlesFromRecherche($_GET['search']);
+
+        }
+        else{
+            $listeArticles = [];
+        }
+
+        ?>
+
+
+        </div>
+    </div>
+    <div class="row mb-5">
+        <form id="" method="GET" action="recherche.php">
+            <div class="col-6">
+                <input type="text" class="form-control" name="search" value="" placeholder="Mot clé....">
+            </div>
+            <div class="col-6">
+                <button type="submit" id="submit" value="recherche" class="btn btn-primary">Rechercher</button>
+            </div>
+        </form>
+    </div> 
+        <div class="row">
+            <?php
+            foreach ($listeArticles as $articles) {
+            ?>
+                <div class="col-6 mb-4">
+                    <div class="card">
+                        <img src="img/<?= $articles->getId(); ?>.jpg" style="max-width: 200px;" class="card-img-top" alt="<?= $articles->getTitre() ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $articles->getTitre() ?></h5>
+                            <p class="card-text"><?= $articles->getTexte() ?></p>
+                            <a href="articles.php?idArticles=<?php echo $articles->getId() ?>" class="btn btn-primary">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>

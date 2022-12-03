@@ -1,0 +1,39 @@
+<!-- Page content-->
+<div class="container">
+    <div class="text-center mt-5">
+        <h1>Les articles</h1>
+    </div>
+
+    {% if session.notification %}
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-{{ session.notification.result }}" role="alert">
+                    {{ session.notification.message }}
+                </div>
+            </div>
+        </div>
+{% endif %}
+
+<div class="row">
+    {% for articles in listeArticles %}
+    <div class="col-6 mb-4">
+        <div class="card">
+            <img src="img/{{ articles.getId }}.jpg"
+                 style="max-width: 200px;"
+                 class="card-img-top" alt="{{ articles.getTitre }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ articles.getTitre }}</h5>
+                <p class="card-text">{{ articles.getTexte }} </p>
+                <a href="articles.php?idArticles={{ articles.getId }}" class="btn btn-primary">Modifier</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+    <ul class="pagination pagination-sm">
+    <ul class="pagination justify-content-center">
+    {% for i in 1..nbPages %}
+    <li class="page-item"><a class="page-link" href="index.php?page={{ i }}">{{ i }}</a></li>
+    {% endfor %}
