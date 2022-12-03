@@ -1,0 +1,7 @@
+{
+    
+    "require": {
+        "twig/twig": "^3.4",
+        "symfony/form": "^6.1"
+    }
+}
